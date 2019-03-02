@@ -4,6 +4,7 @@ export class SignUp {
     constructor() {
         this._signupService = new SignupService();
     }
+    beforeRender() {}
     render() {
         return `
         <div class="auth-wrap d-flex mt-5">
