@@ -17,14 +17,14 @@ export class Http {
     get(url, token = '') {
         return new Promise((resolve, reject) => {
             fetch(url, {
-               method: 'GET',
-               headers: {
-                   'x-access-token': token
-               }
+                method: 'GET',
+                headers: {
+                    'x-access-token': token
+                }
             })
-            .then((response) => response.json())
-            .then((data) => resolve(data))
-            .catch((err) => reject(err));
+                .then((response) => response.json())
+                .then((data) => resolve(data))
+                .catch((err) => reject(err));
         });
     }
 }

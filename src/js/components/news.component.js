@@ -5,12 +5,11 @@ export class News {
     constructor() {
         this._authService = new AuthService();
         this._newsService = new NewsService();
-        this._token = this._authService.token;
         this._news;
     }
 
     async beforeRender() {
-        this._news = await this._newsService.getNews(this._token);
+        this._news = await this._newsService.getNews(this._authService.token);
     }
 
     render() {
