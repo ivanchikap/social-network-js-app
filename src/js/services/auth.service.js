@@ -10,6 +10,10 @@ export class AuthService {
         return localStorage.getItem('sn_user_token');
     }
 
+    get isSubscribed() {
+        return false;
+    }
+
     login(email, password) {
         const http = new Http();
 

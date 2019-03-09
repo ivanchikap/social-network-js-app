@@ -4,35 +4,31 @@ import { HomeComponent } from './components/home.component';
 import { NotFoundComponent } from './components/notfound.component';
 import { UserComponent } from './components/user.component';
 import { NavbarComponent } from './components/navbar.component'
-import { News } from "./components/news.component";
-import { Winners } from "./components/winners.component"
-
+import { PaymentComponent } from './components/payment.component';
 
 //services
 import { ActiveRoute } from './core/active-route.service'; 
 import { AuthGuard } from './guards/auth.guard';
-import {SignUp} from "./components/signup.component";
+import { PaymentGuard } from './guards/payment.guard';
+
+const authGuard = new AuthGuard();
+const paymentGuard = new PaymentGuard();
 
 const routes = {
     '/': {
         component: new HomeComponent(),
-        guard: new AuthGuard()
+        guard: [authGuard]
     },
     '/login': {
         component: new LoginComponent()
     },
-    '/signup': {
-        component: new SignUp()
-    },
-    '/news': {
-        component: new News()
-    },
-    '/winners': {
-        component: new Winners()
-    },
     '/users/:id': {
         component: new UserComponent(),
-        guard: new AuthGuard()
+        guard: [authGuard]
+    },
+    '/payments': {
+        component: new PaymentComponent(),
+        guard: [authGuard, paymentGuard]
     },
     '**': {
         component: new NotFoundComponent()
@@ -51,9 +47,13 @@ const router = async () => {
 
     // Get component for active route
     const component = routes[url] ? routes[url]['component'] : routes['**']['component'];
-    const guard = routes[url] ? routes[url]['guard'] : null;
+    const guards = routes[url] ? routes[url]['guard'] : null;
     // Check guard
-    if (guard && !guard.check()) return;
+    // if (guard && !guard.check()) return;
+    if (guards) {
+        const guardState = guards.every((item) => item.canActivate());
+        if (!guardState) return;
+    }
 
     // render header
     if (header) {
@@ -61,6 +61,7 @@ const router = async () => {
         header.innerHTML = navbarComponent.render();
         navbarComponent.afterRender();
     }
+    
     await component.beforeRender();
     container.innerHTML = component.render();
     component.afterRender();

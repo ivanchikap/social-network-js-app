@@ -1,7 +1,5 @@
-import { AuthService } from "./../services/auth.service";
-import { Routing } from "./../core/routing.service";
-import { ActiveRoute } from './../core/active-route.service';
-
+import { AuthService } from "../services/auth.service";
+import { Routing } from "../core/routing.service";
 
 export class NavbarComponent {
     constructor() {
@@ -17,10 +15,16 @@ export class NavbarComponent {
         <nav class="navbar navbar-light bg-light">
             <a class="navbar-brand">Social Network</a>
             <ul class="navbar-nav d-flex flex-row">
-                <li class="nav-item" >
+                <li class="nav-item" 
+                    style='padding-right: 10px;'>
                     <a class="nav-link" 
                     href="/#/users/${this._authService.userId}" 
                     >My profile</a>
+                </li>
+                <li class="nav-item" >
+                    <a class="nav-link" 
+                    href="/#/payments" 
+                    >Payment</a>
                 </li>
             </ul>
             <button class="btn btn-primary logout-btn">Logout</button>

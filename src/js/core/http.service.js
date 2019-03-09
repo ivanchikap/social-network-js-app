@@ -14,17 +14,12 @@ export class Http {
         });
     }
 
-    get(url, token = '') {
+    get(url) {
         return new Promise((resolve, reject) => {
-            fetch(url, {
-                method: 'GET',
-                headers: {
-                    'x-access-token': token
-                }
-            })
-                .then((response) => response.json())
-                .then((data) => resolve(data))
-                .catch((err) => reject(err));
+            fetch(url)
+            .then((response) => response.json())
+            .then((data) => resolve(data))
+            .catch((err) => reject(err));
         });
     }
 }

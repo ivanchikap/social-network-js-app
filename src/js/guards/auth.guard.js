@@ -7,7 +7,7 @@ export class AuthGuard {
         this._routing = new Routing();
     }
 
-    check() {
+    canActivate() {
         if (!this._authService.userId && !this._authService.token) {
             this._routing.navigate(`/login`);
             return false;
